@@ -67,7 +67,7 @@ normassist-rag/
 
 ---
 
-## 🚧 État du projet
+##  État du projet
 
 Projet en cours de développement (POC).
 
