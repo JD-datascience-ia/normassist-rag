@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/processed/
+.chroma/
+.DS_Store
+.vscode/
+.ipynb_checkpoints/
