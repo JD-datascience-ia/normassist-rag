@@ -21,6 +21,19 @@ Texte:
     return "\n\n".join(context_parts)
 
 
+def extract_sources(retrieved_chunks: List[Dict]) -> List[str]:
+    unique_sources = []
+    seen = set()
+
+    for chunk in retrieved_chunks:
+        source_ref = f"{chunk['source']} - page {chunk['page']}"
+        if source_ref not in seen:
+            seen.add(source_ref)
+            unique_sources.append(source_ref)
+
+    return unique_sources
+
+
 def generate_rag_answer(question: str, retrieved_chunks: List[Dict]) -> str:
     client = OpenAI(api_key=OPENAI_API_KEY)
 
