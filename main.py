@@ -3,6 +3,7 @@ from src.chunking import chunk_documents
 from src.embeddings import EmbeddingModel
 from src.vector_store import reset_collection, index_documents, query_collection
 from src.retrieval import format_retrieval_results
+from src.rag import generate_rag_answer
 
 
 def main():
@@ -24,23 +25,28 @@ def main():
     index_documents(chunked_docs, embeddings)
     print("Chunks indexed in Chroma.")
 
-    query = "Quelles sont les caractéristiques d'une intelligence artificielle digne de confiance ?"
-    query_embedding = embedding_model.embed_query(query)
+    question = "Quelles sont les caractéristiques d'une intelligence artificielle digne de confiance ?"
+    query_embedding = embedding_model.embed_query(question)
 
     results = query_collection(query_embedding, n_results=5)
-    formatted_results = format_retrieval_results(results)
+    retrieved_chunks = format_retrieval_results(results)
 
     print("\n--- QUERY ---")
-    print(query)
+    print(question)
 
-    print("\n--- TOP RESULTS ---")
-    for i, result in enumerate(formatted_results, start=1):
+    print("\n--- TOP RETRIEVED CHUNKS ---")
+    for i, result in enumerate(retrieved_chunks, start=1):
         print(f"\nResult {i}")
         print(f"Chunk ID: {result['chunk_id']}")
         print(f"Source: {result['source']}")
         print(f"Page: {result['page']}")
         print(f"Distance: {result['distance']}")
         print(f"Text preview: {result['text'][:300]}")
+
+    answer = generate_rag_answer(question, retrieved_chunks)
+
+    print("\n--- RAG ANSWER ---")
+    print(answer)
 
 
 if __name__ == "__main__":
