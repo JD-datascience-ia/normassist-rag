@@ -43,6 +43,7 @@ L’assistant est conçu pour traiter des documents tels que :
 ##  Architecture du projet
 
 - `src/ingestion.py` : lecture et extraction des PDF
+- `src/pipeline.py` :  pipeline complète   
 - `src/preprocessing.py` : nettoyage du texte
 - `src/chunking.py` : découpage en segments
 - `src/embeddings.py` : génération des embeddings
@@ -55,33 +56,21 @@ L’assistant est conçu pour traiter des documents tels que :
 
 ##  Structure du projet
 
-normassist-rag/
-├── app/
-├── data/
-├── notebooks/
-├── src/
-├── tests/
-├── main.py
-├── requirements.txt
-├── README.md
+normassist-rag/  
+├── app/  
+├── data/  
+├── notebooks/  
+├── src/  
+├── tests/  
+├── main.py  
+├── requirements.txt  
+├── README.md  
 
 ---
 
 ##  État du projet
 
-Projet en cours de développement (POC).
-
----
-
-##  Étapes suivantes
-
-1. Lecture et extraction des PDF
-2. Structuration du texte
-3. Création des chunks
-4. Indexation dans la base vectorielle
-5. Implémentation du moteur de recherche
-6. Génération de réponses (RAG)
-7. Développement de l’interface utilisateur
+Projet de base terminé. reste a améliorer la lisibilité des réponses, la fonction clean text et l'interface streamlit.
 
 ---
 
