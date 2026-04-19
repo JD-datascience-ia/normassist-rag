@@ -21,15 +21,20 @@ Texte:
     return "\n\n".join(context_parts)
 
 
-def extract_sources(retrieved_chunks: List[Dict]) -> List[str]:
+def extract_sources(retrieved_chunks: List[Dict]) -> List[Dict]:
     unique_sources = []
     seen = set()
 
     for chunk in retrieved_chunks:
-        source_ref = f"{chunk['source']} - page {chunk['page']}"
-        if source_ref not in seen:
-            seen.add(source_ref)
-            unique_sources.append(source_ref)
+        key = (chunk["source"], chunk["page"])
+        if key not in seen:
+            seen.add(key)
+            unique_sources.append(
+                {
+                    "source": chunk["source"],
+                    "page": chunk["page"],
+                }
+            )
 
     return unique_sources
 

@@ -20,10 +20,25 @@ def build_vector_store(data_dir: str = "data/raw"):
     return embedding_model, chunked_docs
 
 
-def answer_question(question: str, embedding_model, n_results: int = 5):
+def answer_question(question: str, embedding_model, n_results: int = 5, selected_source: str = "Tous"):
     query_embedding = embedding_model.embed_query(question)
-    results = query_collection(query_embedding, n_results=n_results)
+    results = query_collection(query_embedding, n_results=10)
     retrieved_chunks = format_retrieval_results(results)
+
+    if selected_source != "Tous":
+        retrieved_chunks = [
+            chunk for chunk in retrieved_chunks
+            if chunk["source"] == selected_source
+        ]
+
+    retrieved_chunks = retrieved_chunks[:n_results]
+
+    if not retrieved_chunks:
+        return {
+            "answer": "Aucun extrait pertinent n'a été trouvé pour ce filtre ou cette question.",
+            "sources": [],
+            "retrieved_chunks": [],
+        }
 
     answer = generate_rag_answer(question, retrieved_chunks)
     sources = extract_sources(retrieved_chunks)
